@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REPO = "chriss/runcalc-pro"
+        DOCKER_REPO = "uwschriss/runcalc-pro"
         VERSION = "v1.0.${BUILD_NUMBER}"
     }
 
