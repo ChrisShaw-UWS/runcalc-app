@@ -1,0 +1,28 @@
+- hosts: all
+  become: yes
+
+  vars:
+    container_name: runcalc
+
+  tasks:
+
+    - name: Remove old container (if exists)
+      docker_container:
+        name: "{{ container_name }}"
+        state: absent
+      ignore_errors: yes
+
+    - name: Pull latest image
+      docker_image:
+        name: "{{ image_repo }}"
+        tag: "{{ image_tag }}"
+        source: pull
+
+    - name: Run container
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ image_repo }}:{{ image_tag }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
