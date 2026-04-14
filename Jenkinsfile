@@ -38,5 +38,20 @@ pipeline {
                 }
             }
         }
+
+        
+        stage('Deploy to EC2') {
+            steps {
+                echo "Deploying to EC2..."
+                sh """
+                ssh -i /var/lib/jenkins/RunCalcPro.pem ubuntu@3.89.180.213 << EOF
+                docker pull $DOCKER_REPO:latest
+                docker stop runcalc || true
+                docker rm runcalc || true
+                docker run -d -p 80:80 --name runcalc $DOCKER_REPO:latest
+                EOF
+                """
+            }
+        }
     }
 }
