@@ -50,21 +50,19 @@ pipeline {
         }
 
         stage('Deploy to EC2') {
-            steps {
-                echo "Deploying to EC2..."
+    steps {
+        echo "Deploying to EC2..."
 
-                sh '''
-                ssh -i /var/lib/jenkins/RunCalcPro.pem ubuntu@$EC2_HOST << 'EOF'
-                docker pull uwschriss/runcalc-pro:latest
-
-                docker stop runcalc || true
-                docker rm runcalc || true
-
-                docker run -d -p 80:80 --name runcalc uwschriss/runcalc-pro:latest
-                EOF
-                '''
-            }
-        }
+        sh '''
+    ssh -i /var/lib/jenkins/RunCalcPro.pem ubuntu@54.88.196.120 << 'EOF'
+    docker pull uwschriss/runcalc-pro:latest
+    docker stop runcalc || true
+    docker rm runcalc || true
+    docker run -d -p 80:80 --name runcalc uwschriss/runcalc-pro:latest
+    EOF
+        '''
+    }
+}
 
         stage('Health Check') {
             steps {
