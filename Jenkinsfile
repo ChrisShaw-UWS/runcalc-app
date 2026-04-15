@@ -44,7 +44,7 @@ pipeline {
                 docker stop runcalc || true
                 docker rm runcalc || true
                 docker run -d -p 80:80 --name runcalc uwschriss/runcalc-pro:latest
-                '
+                EOF
                 '''
             }
         }
